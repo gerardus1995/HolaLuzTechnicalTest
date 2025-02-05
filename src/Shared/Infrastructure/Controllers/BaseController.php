@@ -2,8 +2,6 @@
 
 namespace App\Shared\Infrastructure\Controllers;
 
-use App\Climb\Application\Find\ClimbsFinder;
-use App\Shared\Infrastructure\ApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 

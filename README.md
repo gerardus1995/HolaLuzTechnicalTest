@@ -20,6 +20,8 @@
 ### 🔥 Application execution
 
 1. Start the project with docker `make start`
-2. Now you can access http://localhost:81/api/activities to retrieve all existing activities
+2. Now you can access http://localhost:81/ to know it all starts correctly
 3. Enter the project command line `docker exec -it activities_php bash`
-4. Execute the following command `bin/console suspicious:reading:detector`
+4. Execute the following command `bin/console app:detect:suspicious-readings 2016-readings.xml` for XML
+4. Execute the following command `bin/console app:detect:suspicious-readings 2016-readings.csv` for CSV
+`

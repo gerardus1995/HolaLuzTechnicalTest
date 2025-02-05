@@ -2,8 +2,8 @@
 
 namespace App\Shared\Infrastructure\Input\Reader;
 
+use App\Shared\Infrastructure\Exception\ErrorOpeningFileException;
 use App\SuspiciousReadingDetector\Domain\Clients;
-use RuntimeException;
 
 class CsvReader extends AbstractReader
 {
@@ -15,13 +15,16 @@ class CsvReader extends AbstractReader
         return $this->getClients($treatedClients);
     }
 
+    /**
+     * @throws ErrorOpeningFileException
+     */
     private function getHandle()
     {
         $this->validateFile();
 
         $handle = fopen($this->filePath, 'r');
         if ($handle === false) {
-            throw new RuntimeException("Error opening file: {$this->filePath}");
+            throw new ErrorOpeningFileException($this->filePath);
         }
 
         return $handle;

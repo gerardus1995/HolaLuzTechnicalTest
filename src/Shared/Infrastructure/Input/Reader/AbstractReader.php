@@ -2,6 +2,7 @@
 
 namespace App\Shared\Infrastructure\Input\Reader;
 
+use App\Shared\Infrastructure\Exception\FileNotFoundException;
 use App\SuspiciousReadingDetector\Domain\Client;
 use App\SuspiciousReadingDetector\Domain\Clients;
 use App\SuspiciousReadingDetector\Domain\Reading;
@@ -9,7 +10,6 @@ use App\SuspiciousReadingDetector\Domain\Readings;
 use App\SuspiciousReadingDetector\Domain\ValueObject\ClientId;
 use App\SuspiciousReadingDetector\Domain\ValueObject\ReadingPeriod;
 use App\SuspiciousReadingDetector\Domain\ValueObject\ReadingValue;
-use RuntimeException;
 
 abstract class AbstractReader
 {
@@ -22,10 +22,13 @@ abstract class AbstractReader
 
     abstract public function read(): Clients;
 
+    /**
+     * @throws FileNotFoundException
+     */
     protected function validateFile(): void
     {
         if (!file_exists($this->filePath) || !is_readable($this->filePath)) {
-            throw new RuntimeException("Cannot read file: {$this->filePath}");
+            throw new FileNotFoundException($this->filePath);
         }
     }
 

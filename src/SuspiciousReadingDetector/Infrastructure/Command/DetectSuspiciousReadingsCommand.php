@@ -2,6 +2,8 @@
 
 namespace App\SuspiciousReadingDetector\Infrastructure\Command;
 
+use App\Shared\Infrastructure\Exception\ErrorOpeningFileException;
+use App\Shared\Infrastructure\Exception\FileNotFoundException;
 use App\Shared\Infrastructure\Input\Reader\AbstractReader;
 use App\Shared\Infrastructure\Input\Reader\CsvReader;
 use App\Shared\Infrastructure\Input\Reader\XmlReader;
@@ -44,7 +46,14 @@ final class DetectSuspiciousReadingsCommand extends Command
             return Command::FAILURE;
         }
 
-        $clients = $reader->read();
+        try {
+            $clients = $reader->read();
+        } catch (FileNotFoundException | ErrorOpeningFileException $e) {
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
+
+            return Command::FAILURE;
+        }
+
         $response = $this->detector->__invoke(new RequestSuspiciousReadingDetector($clients));
         $suspiciousReadings = $response->suspiciousReadings();
 
