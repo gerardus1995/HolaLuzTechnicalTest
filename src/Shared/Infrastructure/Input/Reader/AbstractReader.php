@@ -49,4 +49,18 @@ abstract class AbstractReader
 
         return $clients;
     }
+
+    protected function infoIntoTreatedClient(
+        array $treatedClients,
+        string $clientId,
+        string $period,
+        string $reading
+    ): array {
+        $treatedClients[$clientId][] = [
+            'period' => $period,
+            'reading' => $reading,
+        ];
+
+        return $treatedClients;
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Shared\Infrastructure\Input\Reader;
 
+use App\Shared\Infrastructure\Exception\ErrorOpeningFileException;
 use App\SuspiciousReadingDetector\Domain\Clients;
-use RuntimeException;
 use SimpleXMLElement;
 
 class XmlReader extends AbstractReader
@@ -22,7 +22,7 @@ class XmlReader extends AbstractReader
 
         $xml = simplexml_load_file($this->filePath);
         if ($xml === false) {
-            throw new RuntimeException("Error parsing XML file: {$this->filePath}");
+            throw new ErrorOpeningFileException($this->filePath);
         }
 
         return $xml;
@@ -31,11 +31,14 @@ class XmlReader extends AbstractReader
     private function getTreatedClients(SimpleXMLElement $xml): array
     {
         $treatedClients = [];
+
         foreach ($xml->reading as $data) {
-            $treatedClients[(string) $data['clientID']][] = [
-                'period' => (string) $data['period'],
-                'reading' => (float) $data,
-            ];
+            $treatedClients = $this->infoIntoTreatedClient(
+                $treatedClients,
+                $data['clientID'],
+                $data['period'],
+                $data
+            );
         }
 
         return $treatedClients;

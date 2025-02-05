@@ -33,17 +33,19 @@ class CsvReader extends AbstractReader
     private function getTreatedClients($handle): array
     {
         $treatedClients = [];
-        fgetcsv($handle);
 
+        fgetcsv($handle);
         while (($data = fgetcsv($handle)) !== false) {
             if (count($data) !== 3) {
                 continue;
             }
 
-            $treatedClients[$data[0]][] = [
-                'period' => $data[1],
-                'reading' => $data[2],
-            ];
+            $treatedClients = $this->infoIntoTreatedClient(
+                $treatedClients,
+                $data[0],
+                $data[1],
+                $data[2]
+            );
         }
 
         fclose($handle);
