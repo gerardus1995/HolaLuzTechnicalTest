@@ -1,0 +1,4 @@
+activity_get:
+  path: /
+  controller: App\Shared\Infrastructure\Controllers\BaseController
+  methods:  [GET]

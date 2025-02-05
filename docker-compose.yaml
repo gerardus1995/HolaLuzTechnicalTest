@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+    rabbitmq:
+        container_name: rabbitmq
+        image: 'rabbitmq:3.10.5-management'
+        restart: unless-stopped
+        ports:
+            - 5672:15672
+        environment:
+            - RABBITMQ_DEFAULT_USER=guest
+            - RABBITMQ_DEFAULT_PASS=guest
+        networks:
+            - shared_network
+            - activities_network
+            
+    php:
+        container_name: activities_php
+        user: "${UID}:${GID}"
+        build:
+            context: .
+            dockerfile: .docker/php/Dockerfile
+            args:
+                TIMEZONE: Europe/Madrid
+        volumes:
+            - ./:/var/www/activities_service/
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        networks:
+            - activities_network
+
+    nginx:
+        container_name: activities_nginx
+        build:
+            context: .
+            dockerfile: .docker/nginx/Dockerfile
+        volumes:
+            - ./:/var/www/activities_service/
+        ports:
+            - 81:80
+        networks:
+            - activities_network
+            
+    db:
+        container_name: activities_db
+        image: mysql:8.0.20
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - db_activities:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: chopin
+            MYSQL_DATABASE: db_activities
+            MYSQL_USER: nil
+            MYSQL_PASSWORD: chopin
+        ports:
+            - 3308:3306
+        networks:
+            - activities_network
+
+volumes:
+    activitiesback_app_sync:
+        external: true
+    db_activities:
+    rabbitmq:
+
+networks:
+    activities_network:
+    shared_network:
+        name: activities_shared_network  
+        driver: bridge
