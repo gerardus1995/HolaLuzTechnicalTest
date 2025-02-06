@@ -41,7 +41,7 @@ class Client extends AggregateRoot
             return ($values[$middle - 1]->__toInt() + $values[$middle]->__toInt()) / 2;
         }
 
-        return $values[$middle];
+        return $values[$middle]->__toInt();
     }
 
     public function addReading(Reading $reading): void

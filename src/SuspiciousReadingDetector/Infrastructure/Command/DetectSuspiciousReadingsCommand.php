@@ -17,9 +17,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class DetectSuspiciousReadingsCommand extends Command
+class DetectSuspiciousReadingsCommand extends Command
 {
-    protected static $defaultName = 'app:detect:suspicious-readings';
+    protected static string $defaultName = 'app:detect:suspicious-readings';
 
     public function __construct(
         private readonly SuspiciousReadingDetector $detector
@@ -68,7 +68,7 @@ final class DetectSuspiciousReadingsCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function getReader(string $file): ?AbstractReader
+    protected function getReader(string $file): ?AbstractReader
     {
         /** @var AbstractReader|null $reader */
         $reader = match (pathinfo($file, PATHINFO_EXTENSION)) {

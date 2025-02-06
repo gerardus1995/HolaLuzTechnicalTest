@@ -23,5 +23,6 @@
 2. Now you can access http://localhost:81/ to know it all starts correctly
 3. Enter the project command line `docker exec -it activities_php bash`
 4. Execute the following command `bin/console app:detect:suspicious-readings 2016-readings.xml` for XML
-4. Execute the following command `bin/console app:detect:suspicious-readings 2016-readings.csv` for CSV
+5. Execute the following command `bin/console app:detect:suspicious-readings 2016-readings.csv` for CSV
+6. Execute the following command `make tests` to execute unit tests
 `

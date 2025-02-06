@@ -32,7 +32,7 @@ class ReadingPeriod
 
     public function __toString(): string
     {
-        return sprintf('%04d-%02d', $this->year, $this->month);
+        return sprintf('%04d-%02d', $this->year->__toInt(), $this->month->__toInt());
     }
 
     private function complainsWithFormat(string $period): array

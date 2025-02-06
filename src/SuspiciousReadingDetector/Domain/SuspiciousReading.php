@@ -4,7 +4,6 @@ namespace App\SuspiciousReadingDetector\Domain;
 
 use App\Shared\Domain\AggregateRoot;
 use App\Shared\Domain\ValueObject\FloatValueObject;
-use App\Shared\Domain\ValueObject\NumberValueObject;
 
 class SuspiciousReading extends AggregateRoot
 {

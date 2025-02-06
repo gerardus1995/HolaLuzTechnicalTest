@@ -20,7 +20,8 @@
         "symfony/runtime": "7.0.*",
         "symfony/validator": "7.0.*",
         "symfony/yaml": "7.0.*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "phpunit/phpunit": "^9.5"
     },
     "config": {
         "allow-plugins": {

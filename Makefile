@@ -14,3 +14,5 @@ down:
 ping-mysql:
 	@docker exec activities_db mysqladmin --user=root --password=chopin --host "127.0.0.1" ping --silent
 
+run-tests:
+	docker exec -i activities_php ./vendor/bin/phpunit

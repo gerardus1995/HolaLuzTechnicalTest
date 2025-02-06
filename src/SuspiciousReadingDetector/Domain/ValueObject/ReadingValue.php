@@ -6,6 +6,6 @@ namespace App\SuspiciousReadingDetector\Domain\ValueObject;
 
 use App\Shared\Domain\ValueObject\NumberValueObject;
 
-final class ReadingValue extends NumberValueObject
+class ReadingValue extends NumberValueObject
 {
 }

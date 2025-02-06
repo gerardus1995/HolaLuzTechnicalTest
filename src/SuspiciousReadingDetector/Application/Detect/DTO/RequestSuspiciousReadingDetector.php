@@ -4,10 +4,10 @@ namespace App\SuspiciousReadingDetector\Application\Detect\DTO;
 
 use App\SuspiciousReadingDetector\Domain\Clients;
 
-readonly class RequestSuspiciousReadingDetector
+class RequestSuspiciousReadingDetector
 {
     public function __construct(
-        private Clients $clients
+        private readonly Clients $clients
     ) {
     }
 
